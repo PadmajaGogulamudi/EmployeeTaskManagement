@@ -8,4 +8,6 @@ import com.example.springBootMultipleTables.entity.Task;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 	public List<Task> findByUserId(long userId);//findAllByUserId or findByUserId which one is correct
+
+	public Task findByIdAndUserId(long taskId, long userId);
 }

@@ -34,8 +34,9 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.5.0</version>
+			<version>2.6.0</version> <!-- Use the latest compatible version -->
 		</dependency>
+
 		<!-- Source:
 		https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
 		<dependency>
