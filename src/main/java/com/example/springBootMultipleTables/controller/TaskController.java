@@ -53,13 +53,36 @@ public class TaskController {
 		return new ResponseEntity<>("Task deleted successfully", HttpStatus.OK);
 	}
 	/*
-	 * spring security ni use chesi multiple ways lo api's ni secure cheskovachu 
-	 * 1. form based authentication
-	 * 2.Basic Authentication
-	 * 3. JWT Authentication
-	 * 4. QAuth Authentication
+	 * spring security ni use chesi multiple ways lo api's ni secure cheskovachu 1.
+	 * form based authentication 2.Basic Authentication 3. JWT Authentication 4.
+	 * QAuth Authentication JWT Authentication -> 3 parts => 1. verification of user
+	 * credentials 2. generate jwt for authenticated user 3. handling API calls
+	 * based on valid JWT ================================== 1.verification of user
+	 * credentials: -------------------------------------
+	 * 
+	 * @Bean
+	 * 
+	 * @AuthentiationManager
+	 * 
+	 * @Bean
+	 * 
+	 * @secutityFilterChain --------------------------------- 
+	 * 1.adding security
+	 * dependency(default form based security enable avvudhi 
+	 * 2. run as spring boot
+	 * application 
+	 * 3.security password will generate hashcode value is the key ->go
+	 * to browser and open the url then it ask login then only we can access out
+	 * application  (form based authentication).
+	 * ------------------------------------
+	 * implement jwt  for this we have to validate the user for that 
+	 * we are going to use those two bean  @annotations 
+	 * we are going to create new package for security configuration 
 	 * 
 	 * 
-	 * */
+	 * 
+	 * 
+	 * 
+	 */
 
 }
