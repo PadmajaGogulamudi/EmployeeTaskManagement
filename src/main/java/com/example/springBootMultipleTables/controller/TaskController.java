@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,7 @@ import jakarta.validation.Valid;
 public class TaskController {
 	@Autowired
 	private TaskService taskService;
-
+	
 	// save task
 	@PostMapping("/{userId}/addTasksToUser")
 	public ResponseEntity<TaskDto> saveTask(@PathVariable(name = "userId") long userId,
@@ -31,21 +32,26 @@ public class TaskController {
 
 		return new ResponseEntity<>(taskService.saveTask(userId, taskDto), HttpStatus.CREATED);
 	}
-
+	@PreAuthorize(value="ROLE_ADMIN")
 	// get all tasks
 
 	@GetMapping("/{userId}/findAllTasks")
 	public ResponseEntity<List<TaskDto>> getAllTasks(@PathVariable("userId") long userId) {
 		return new ResponseEntity<>(taskService.getAllTasks(userId), HttpStatus.OK);
 	}
-
+	
+	@PreAuthorize(value="ROLE_ADMIN")
 	// get individual task
 	@GetMapping("/taskId:{taskId}/userId:{userId}")
 	public ResponseEntity<TaskDto> getTask(@PathVariable("taskId") long taskId, @PathVariable("userId") long userId) {
 		return new ResponseEntity<>(taskService.getTask(taskId, userId), HttpStatus.OK);
 	}
+	
+	
+	@PreAuthorize(value="ROLE_ADMIN")
 
 	// delete individual task
+	
 	@DeleteMapping("/taskId:{taskId}/userId:{userId}/deleteTask")
 	public ResponseEntity<String> deleteTaskById(@PathVariable("taskId") long taskId,
 			@PathVariable("userId") long userId) {
@@ -66,18 +72,34 @@ public class TaskController {
 	 * 
 	 * @Bean
 	 * 
-	 * @secutityFilterChain --------------------------------- 
+	 * @secutityFilterChain
+	 * -------------------------------- 
 	 * 1.adding security
-	 * dependency(default form based security enable avvudhi 
-	 * 2. run as spring boot
-	 * application 
+	 * dependency(default form based security enable avvudhi )
+	 * 2. run as spring boot application 
 	 * 3.security password will generate hashcode value is the key ->go
-	 * to browser and open the url then it ask login then only we can access out
+	 * to browser and open the URL then it ask login then only we can access out
 	 * application  (form based authentication).
 	 * ------------------------------------
-	 * implement jwt  for this we have to validate the user for that 
+	 * implement JWT  for this we have to validate the user for that 
 	 * we are going to use those two bean  @annotations 
 	 * we are going to create new package for security configuration 
+	 * create two beans and then go an create ///router///
+	 * loginDTo create 
+	 * -------------------------------------------
+	 * UserDetailsService->(loadUserByUsername method is unimplemented one )
+	 * Collection<? extends GrantedAuthority> ->SimpleGrantedAuthority
+	 * ------------------------------------------------
+	 * @PreAuthorize(value="ROLE_ADMIN")
+	 * 
+	 * ----------------------------------------------------
+	 * jwt is encoded string format it has 3 parts
+	 * 1.header(algorithem related things used  to encode the password)
+	 * 2.payload(dhenikosam generate chesamo dhaniki sambhandhinchina details will store)(whom the token refers to)
+	 * 3.signature
+	 * to generate jwt we have to add jwt dependency
+	 * --------------------------------------------------------
+	 * 
 	 * 
 	 * 
 	 * 

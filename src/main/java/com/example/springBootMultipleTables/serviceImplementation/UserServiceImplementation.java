@@ -1,6 +1,7 @@
 package com.example.springBootMultipleTables.serviceImplementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.springBootMultipleTables.entity.Users;
@@ -11,9 +12,13 @@ import com.example.springBootMultipleTables.service.UserService;
 public class UserServiceImplementation implements UserService {
 	@Autowired
 	private UserRepository userRepo;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public UserDto createUser(UserDto userDto) {
+		//before adding user we have to encode the password
+		userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		Users saveduser=userRepo.save(user_Dto_ToEntity(userDto));
 		return user_entity_to_Dto(saveduser);
 	}
