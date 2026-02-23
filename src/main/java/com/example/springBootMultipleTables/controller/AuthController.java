@@ -12,29 +12,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.springBootMultipleTables.paylod.JWTAuthResponse;
 import com.example.springBootMultipleTables.paylod.LoginDto;
 import com.example.springBootMultipleTables.paylod.UserDto;
+import com.example.springBootMultipleTables.security.JwtTokenProvider;
 import com.example.springBootMultipleTables.service.UserService;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+	
 	@Autowired
-	private UserService userService;
+	private UserService userService; 
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
     // store user into DB
 	@PostMapping("/userRegister")
 	public ResponseEntity<UserDto> createUser(@RequestBody UserDto user) {
 		
-		return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
+		return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);   
 	}
 
 	@PostMapping("/login") 
-	public ResponseEntity<String> loginUser(@RequestBody LoginDto loginDto) {
+	public ResponseEntity<JWTAuthResponse> loginUser(@RequestBody LoginDto loginDto) {
 		Authentication authentication = authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		return new ResponseEntity<>("user loged in successfully", HttpStatus.OK);
+		String token= jwtTokenProvider.generateToken(authentication);//get the token
+		//return new ResponseEntity<>(token, HttpStatus.OK);// string formant but i need json format for that we have to create a pojo
+		return ResponseEntity.ok(new JWTAuthResponse(token));
 	}
 }
