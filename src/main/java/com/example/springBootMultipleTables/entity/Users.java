@@ -8,7 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -26,7 +25,7 @@ public class Users {
 	private String name;
 	@Email
 	private String email;
-	@Size(min = 0, max = 8)
+	//@Size(min = 0, max = 1)
 	private String password;
 
 	public long getId() {

@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Users user = userRepo.findByEmail(email).orElseThrow(() -> new UserNotFound("user npt found !!!!!!!"));
+		Users user = userRepo.findByEmail(email).orElseThrow(() -> new UserNotFound("user not found !!!!!!!"));
 		Set<String> roles = new HashSet<>();
 		roles.add("ROLE_ADMIN");
 		// email,password,granted authorities

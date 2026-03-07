@@ -43,5 +43,12 @@ public class AuthController {
 		String token= jwtTokenProvider.generateToken(authentication);//get the token
 		//return new ResponseEntity<>(token, HttpStatus.OK);// string formant but i need json format for that we have to create a pojo
 		return ResponseEntity.ok(new JWTAuthResponse(token));
+		
 	}
+	/*
+	 * handling API's using valid tokens
+	 * ---------------------------------
+	 * pass generated token at headers with Authorization as key
+	 * create class at security package (JwtAuthentictionFilter) override doFilterInternal method
+	 */
 }

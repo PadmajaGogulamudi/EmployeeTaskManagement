@@ -25,8 +25,9 @@ public class TaskController {
 	@Autowired
 	private TaskService taskService;
 	
+	@PreAuthorize(value="ROLE_ADMIN")
 	// save task
-	@PostMapping("/{userId}/addTasksToUser")
+	@PostMapping("/{userId}/addTaskToUser")
 	public ResponseEntity<TaskDto> saveTask(@PathVariable(name = "userId") long userId,
 			@Valid @RequestBody TaskDto taskDto) {
 
