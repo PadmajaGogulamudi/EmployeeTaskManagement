@@ -11,9 +11,10 @@ public class SpringBootMultipleTablesApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootMultipleTablesApplication.class, args);
 	}
+	
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
 
-}
+} 

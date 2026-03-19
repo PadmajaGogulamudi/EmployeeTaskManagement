@@ -25,7 +25,8 @@ public class TaskController {
 	@Autowired
 	private TaskService taskService;
 	
-	@PreAuthorize(value="ROLE_ADMIN")
+//	@PreAuthorize(value="ROLE_ADMIN")
+	@PreAuthorize("hasRole('ADMIN')")
 	// save task
 	@PostMapping("/{userId}/addTaskToUser")
 	public ResponseEntity<TaskDto> saveTask(@PathVariable(name = "userId") long userId,
@@ -33,7 +34,7 @@ public class TaskController {
 
 		return new ResponseEntity<>(taskService.saveTask(userId, taskDto), HttpStatus.CREATED);
 	}
-	@PreAuthorize(value="ROLE_ADMIN")
+	@PreAuthorize("hasRole('ADMIN')")
 	// get all tasks
 
 	@GetMapping("/{userId}/findAllTasks")
@@ -41,7 +42,7 @@ public class TaskController {
 		return new ResponseEntity<>(taskService.getAllTasks(userId), HttpStatus.OK);
 	}
 	
-	@PreAuthorize(value="ROLE_ADMIN")
+	@PreAuthorize("hasRole('ADMIN')")
 	// get individual task
 	@GetMapping("/taskId:{taskId}/userId:{userId}")
 	public ResponseEntity<TaskDto> getTask(@PathVariable("taskId") long taskId, @PathVariable("userId") long userId) {
@@ -49,8 +50,7 @@ public class TaskController {
 	}
 	
 	
-	@PreAuthorize(value="ROLE_ADMIN")
-
+	@PreAuthorize("hasRole('ADMIN')")
 	// delete individual task
 	
 	@DeleteMapping("/taskId:{taskId}/userId:{userId}/deleteTask")

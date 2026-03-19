@@ -32,7 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		// more than one role so use set to remove duplicates of roles but storing
 		// multiples here
 		return new User(user.getEmail(), user.getPassword(),userAuthorities(roles));
-	}
+	} 
 	
 	private Collection<? extends GrantedAuthority> userAuthorities( Set<String> roles){
 		return  roles.stream().map(role->new SimpleGrantedAuthority(role)).collect(Collectors.toList());
